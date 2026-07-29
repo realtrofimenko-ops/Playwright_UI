@@ -1,5 +1,8 @@
 import pytest
 
+from pages.login_page import CinescopeLoginPage
+from pages.movie_page import MoviePage
+
 DEFAULT_UI_TIMEOUT = 30000
 
 
@@ -9,7 +12,9 @@ def browser(playwright):
         headless=False,
         slow_mo=300
     )
+
     yield browser
+
     browser.close()
 
 
@@ -28,11 +33,24 @@ def context(browser):
     yield context
 
     context.tracing.stop(path="trace.zip")
+
     context.close()
 
 
 @pytest.fixture(scope="function")
 def page(context):
     page = context.new_page()
+
     yield page
+
     page.close()
+
+
+@pytest.fixture
+def login_page(page):
+    return CinescopeLoginPage(page)
+
+
+@pytest.fixture
+def movie_page(page):
+    return MoviePage(page)

@@ -3,7 +3,7 @@
 __pycache__/
 *.pyc
 .env
-.env.py
+.env
 trace.zip
 screenshot.png
 allure-results/

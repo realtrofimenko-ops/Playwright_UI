@@ -1,4 +1,5 @@
-from playwright.sync_api import Page
+import allure
+from playwright.sync_api import Page, expect
 
 
 class BasePage:
@@ -16,7 +17,13 @@ class BasePage:
         self.page.click(locator)
 
     def wait_for_element(self, locator):
-        self.page.locator(locator).wait_for(state="visible")
+        expect(self.page.locator(locator)).to_be_visible()
 
     def make_screenshot_and_attach_to_allure(self):
-        self.page.screenshot(path="screenshot.png", full_page=True)
+        screenshot = self.page.screenshot(full_page=True)
+
+        allure.attach(
+            screenshot,
+            name="Screenshot",
+            attachment_type=allure.attachment_type.PNG
+        )
