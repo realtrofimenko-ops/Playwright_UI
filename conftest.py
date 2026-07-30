@@ -2,6 +2,7 @@ import pytest
 
 from pages.login_page import CinescopeLoginPage
 from pages.movie_page import MoviePage
+from pages.register_page import RegisterPage
 
 DEFAULT_UI_TIMEOUT = 30000
 
@@ -54,3 +55,7 @@ def login_page(page):
 @pytest.fixture
 def movie_page(page):
     return MoviePage(page)
+
+@pytest.fixture
+def register_page(page):
+    return RegisterPage(page)

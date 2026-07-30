@@ -14,12 +14,17 @@ class MoviePage(BasePage):
         self.more_buttons = "[data-qa-id='more_button']"
 
         self.review_input = "[data-qa-id='movie_review_input']"
-        self.rating_button = "button[role='combobox']"
+
+        self.rating_button = "form button[role='combobox']"
+
         self.send_button = "[data-qa-id='movie_review_submit_button']"
+
+    def open_movies(self):
+        self.open_url(self.movies_url)
 
     def open_first_movie(self):
 
-        self.open_url(self.movies_url)
+        self.open_movies()
 
         self.page.locator(self.more_buttons).first.click()
 
@@ -28,6 +33,10 @@ class MoviePage(BasePage):
         ).to_be_visible()
 
     def add_review(self, text, rating):
+
+        expect(
+            self.page.locator(self.review_input)
+        ).to_be_visible()
 
         self.enter_text_to_element(
             self.review_input,
